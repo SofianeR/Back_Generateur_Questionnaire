@@ -26,7 +26,7 @@ app.use(backofficeRoutes);
 const questionFormRoutes = require("./routes/questionForm");
 app.use(questionFormRoutes);
 
-const reponseFormRoutes = require("./routes/reponseForm");
+const reponseFormRoutes = require("./routes/answerForm");
 app.use(reponseFormRoutes);
 
 app.get("/", (req, res) => {

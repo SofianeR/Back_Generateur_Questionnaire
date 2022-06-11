@@ -6,15 +6,15 @@ const AnswerForm = require("../Models/AnswerForm");
 
 router.post("/answerForm/create", async (req, res) => {
   try {
-    if (req.fields.title && req.fields.formulaire && req.fields.reponses) {
+    if (req.fields.title && req.fields.questionForm && req.fields.reponses) {
       const checkForForm = await QuestionForm.findOne({
-        _id: req.fields.formulaire._id,
+        _id: req.fields.questionForm._id,
       });
       if (checkForForm) {
         const newReponsesEntry = new AnswerForm({
           title: req.fields.title,
           reponses: req.fields.reponses,
-          formulaire: req.fields.formulaire,
+          questionForm: req.fields.questionForm,
         });
         await newReponsesEntry.save();
 
@@ -36,12 +36,13 @@ router.post("/answerForm/create", async (req, res) => {
 
 router.post("/answerForm/delete/all", async (req, res) => {
   try {
+    console.log(req.fields);
     const searchQuestionForm = await QuestionForm.findOne({
       _id: req.fields.formulaireId,
     });
 
     await AnswerForm.deleteMany({
-      formulaire: req.fields.formulaireId,
+      questionForm: req.fields.formulaireId,
     });
 
     searchQuestionForm.answerForm = [];
