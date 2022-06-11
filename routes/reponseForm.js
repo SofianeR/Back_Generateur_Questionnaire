@@ -1,14 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
+const QuestionForm = require("../Models/QuestionForm");
+const AnswerForm = require("../Models/AnswerForm");
+
 router.post("/reponseForm/list", async (req, res) => {
   try {
     if (req.fields.title && req.fields.formulaire && req.fields.reponses) {
-      const checkForForm = await Formulaire.findOne({
+      const checkForForm = await QuestionForm.findOne({
         _id: req.fields.formulaire._id,
       });
       if (checkForForm) {
-        const newReponsesEntry = new ReponsesFormulaires({
+        const newReponsesEntry = new AnswerForm({
           title: req.fields.title,
           reponses: req.fields.reponses,
           formulaire: req.fields.formulaire,
@@ -33,16 +36,18 @@ router.post("/reponseForm/list", async (req, res) => {
 
 router.post("/reponseForm/delete/all", async (req, res) => {
   try {
-    const searchQuestionForm = await Formulaire.findOne({
+    const searchQuestionForm = await QuestionForm.findOne({
       _id: req.fields.formulaireId,
     });
 
-    const searchReponseForm = await ReponsesFormulaires.deleteMany({
+    const searchReponseForm = await AnswerForm.deleteMany({
       formulaire: req.fields.formulaireId,
     });
 
     searchQuestionForm.reponseFormulaire = [];
+
     await searchQuestionForm.save();
+
     res.json(searchQuestionForm);
   } catch (error) {
     res.status("400").json({ message: error.message });
@@ -52,7 +57,7 @@ router.post("/reponseForm/delete/all", async (req, res) => {
 router.post("/reponseForm/delete/single", async (req, res) => {
   try {
     if (req.fields.id) {
-      const reponseToDelete = await ReponsesFormulaires.findByIdAndDelete({
+      const reponseToDelete = await AnswerForm.findByIdAndDelete({
         _id: req.fields.id,
       });
       res.json(reponseToDelete);

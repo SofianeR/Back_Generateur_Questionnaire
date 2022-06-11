@@ -3,12 +3,12 @@ const router = express.Router();
 
 const cloudinary = require("cloudinary").v2;
 
+const QuestionForm = require("../Models/QuestionForm");
+
 router.get("/questionForm/:id", async (req, res) => {
   try {
-    // console.log("dans la route => ", req.params);
-
-    const form = await Formulaire.findOne({ _id: req.params.id }).populate(
-      "reponseFormulaire"
+    const form = await QuestionForm.findOne({ _id: req.params.id }).populate(
+      "AnswerForm"
     );
     if (form) {
       res.json(form);
@@ -22,8 +22,8 @@ router.get("/questionForm/:id", async (req, res) => {
 
 router.get("/questionForm/list", async (req, res) => {
   try {
-    const listForm = await Formulaire.find();
-    const count = await Formulaire.find().count();
+    const listForm = await QuestionForm.find();
+    const count = await QuestionForm.find().count();
 
     res.json({ count: count, listForm: listForm });
   } catch (error) {
@@ -36,10 +36,10 @@ router.post("/questionForm/create", async (req, res) => {
     const { titleForm, slug, theme, questions } = req.fields;
     console.log(questions);
 
-    const checkForm = await Formulaire.findOne({ title: titleForm });
+    const checkForm = await QuestionForm.findOne({ title: titleForm });
 
     if (!checkForm) {
-      const newForm = new Formulaire({
+      const newForm = new QuestionForm({
         title: titleForm,
         slug: slug,
         questions: questions,
@@ -66,7 +66,7 @@ router.post("/questionForm/create", async (req, res) => {
 router.post("/questionForm/update", async (req, res) => {
   try {
     if (req.fields.id) {
-      const formToUpdate = await Formulaire.findOne({ _id: req.fields.id });
+      const formToUpdate = await QuestionForm.findOne({ _id: req.fields.id });
       if (formToUpdate) {
         console.log("ici");
         formToUpdate.title = req.fields.titleForm;
@@ -101,7 +101,7 @@ router.post("/questionForm/update", async (req, res) => {
 router.post("/deleteForm", async (req, res) => {
   try {
     if (req.fields.id) {
-      const formToDelete = await Formulaire.findByIdAndDelete({
+      const formToDelete = await QuestionForm.findByIdAndDelete({
         _id: req.fields.id,
       });
       if (formToDelete) {
