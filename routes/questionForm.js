@@ -8,7 +8,7 @@ const QuestionForm = require("../Models/QuestionForm");
 router.get("/questionForm/single/:id", async (req, res) => {
   try {
     const form = await QuestionForm.findOne({ _id: req.params.id }).populate(
-      "AnswerForm"
+      "answerForm"
     );
     if (form) {
       res.json(form);
