@@ -48,6 +48,8 @@ router.post("/questionForm/create", async (req, res) => {
       if (req.files.picture) {
         const result = await cloudinary.uploader.upload(req.files.picture.path);
         newForm.picture = result.secure_url;
+      } else {
+        newForm.picture = "";
       }
 
       if (req.fields.theme) {
