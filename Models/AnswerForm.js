@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const AnswerForm = mongoose.model("ResponsesFormulaire", {
+const AnswerForm = mongoose.model("AnswerForm", {
   title: {
     required: true,
     type: String,
