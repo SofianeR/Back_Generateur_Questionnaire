@@ -5,7 +5,7 @@ const cloudinary = require("cloudinary").v2;
 
 const QuestionForm = require("../Models/QuestionForm");
 
-router.get("/questionForm/:id", async (req, res) => {
+router.get("/questionForm/single/:id", async (req, res) => {
   try {
     const form = await QuestionForm.findOne({ _id: req.params.id }).populate(
       "AnswerForm"
