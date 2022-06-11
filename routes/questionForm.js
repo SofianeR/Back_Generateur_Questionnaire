@@ -20,7 +20,7 @@ router.get("/questionForm/single/:id", async (req, res) => {
   }
 });
 
-router.get("/questionForm/list", async (req, res) => {
+router.get("/questionForm/all", async (req, res) => {
   try {
     const listForm = await QuestionForm.find();
     const count = await QuestionForm.find().count();
@@ -98,7 +98,7 @@ router.post("/questionForm/update", async (req, res) => {
   }
 });
 
-router.post("/deleteForm", async (req, res) => {
+router.post("/questionForm/delete/single", async (req, res) => {
   try {
     if (req.fields.id) {
       const formToDelete = await QuestionForm.findByIdAndDelete({

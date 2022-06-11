@@ -8,7 +8,7 @@ const AnswerForm = mongoose.model("AnswerForm", {
 
   reponses: Array,
 
-  formulaire: {
+  questionForm: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "QuestionForm",
   },

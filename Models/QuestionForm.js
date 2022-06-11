@@ -17,7 +17,7 @@ const QuestionForm = mongoose.model("QuestionForm", {
 
   questions: Array,
 
-  AnswerForm: [{ type: mongoose.Schema.Types.ObjectId, ref: "AnswerForm" }],
+  answerForm: [{ type: mongoose.Schema.Types.ObjectId, ref: "AnswerForm" }],
 });
 
 module.exports = QuestionForm;
