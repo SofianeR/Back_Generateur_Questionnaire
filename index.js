@@ -6,7 +6,12 @@ const cors = require("cors");
 
 const app = express();
 app.use(formidable());
-app.use(cors());
+
+var corsOptions = {
+  origin: "http://localhost:3000/",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 const cloudinary = require("cloudinary").v2;
 
