@@ -7,7 +7,7 @@ const cors = require("cors");
 const app = express();
 app.use(formidable());
 
-app.use(cors());
+// app.use(cors());
 
 const cloudinary = require("cloudinary").v2;
 
