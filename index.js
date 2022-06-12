@@ -29,6 +29,9 @@ app.use(questionFormRoutes);
 const reponseFormRoutes = require("./routes/answerForm");
 app.use(reponseFormRoutes);
 
+const pictureUpload = require("./routes/pictureUpload");
+app.use(pictureUpload);
+
 app.get("/", (req, res) => {
   res.json("introuvable");
 });

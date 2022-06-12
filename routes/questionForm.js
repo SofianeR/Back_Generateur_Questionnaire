@@ -33,24 +33,19 @@ router.get("/questionForm/all", async (req, res) => {
 
 router.post("/questionForm/create", async (req, res) => {
   try {
-    const { titleForm, slug, theme, questions } = req.fields;
-    console.log(questions);
+    const { title, slug, theme, questions, picture } = req.fields;
+    console.log(req.fields);
 
-    const checkForm = await QuestionForm.findOne({ title: titleForm });
+    const checkForm = await QuestionForm.findOne({ title });
 
     if (!checkForm) {
       const newForm = new QuestionForm({
-        title: titleForm,
-        slug: slug,
-        questions: questions,
+        title,
+        slug,
+        questions,
+        picture,
+        theme,
       });
-
-      if (req.files.picture) {
-        const result = await cloudinary.uploader.upload(req.files.picture.path);
-        newForm.picture = result.secure_url;
-      } else {
-        newForm.picture = "";
-      }
 
       if (req.fields.theme) {
         newForm.theme = theme;
@@ -68,26 +63,19 @@ router.post("/questionForm/create", async (req, res) => {
 router.post("/questionForm/update", async (req, res) => {
   try {
     if (req.fields.id) {
-      const formToUpdate = await QuestionForm.findOne({ _id: req.fields.id });
+      let formToUpdate = await QuestionForm.findOne({ _id: req.fields.id });
+
       if (formToUpdate) {
-        console.log("ici");
-        formToUpdate.title = req.fields.titleForm;
+        formToUpdate.title = req.fields.title;
+        formToUpdate.slug = formToUpdate.slug;
         formToUpdate.questions = req.fields.questions;
         formToUpdate.theme = req.fields.theme;
+        formToUpdate.picture = req.fields.picture;
 
-        if (req.fields.picture !== "undefined") {
-          console.log("avant await cloudinary");
-
-          const result = await cloudinary.uploader.upload(
-            req.files.picture.path
-          );
-          console.log("apres await cloudinary");
-
-          formToUpdate.picture = result.secure_url;
-        }
-        console.log("avant save");
         await formToUpdate.save();
+
         console.log("apres save");
+
         res.json(formToUpdate);
       } else {
         res.status(400).json("Form not found");

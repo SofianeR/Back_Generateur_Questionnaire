@@ -3,10 +3,11 @@ const router = express.Router();
 
 router.post("/backoffice/login", (req, res) => {
   try {
-    if (req.fields.password === "admin") {
-      res.json({ message: "connecté" });
+    const password = "admin";
+    if (req.fields.password === password) {
+      res.json({ message: "connecté", password: password });
     } else {
-      res.json({ message: "incorrect password" });
+      res.json({ error: "incorrect password" });
     }
   } catch (error) {
     res.status(400).json(error.message);
