@@ -5,7 +5,7 @@ router.post("/backoffice/login", (req, res) => {
   try {
     const password = "admin";
     if (req.fields.password === password) {
-      res.json({ message: "connecté", password: password });
+      res.json({ message: "Connecté", password: password });
     } else {
       res.json({ error: "incorrect password" });
     }

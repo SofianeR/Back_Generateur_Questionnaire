@@ -36,7 +36,6 @@ router.post("/answerForm/create", async (req, res) => {
 
 router.post("/answerForm/delete/all", async (req, res) => {
   try {
-    console.log(req.fields);
     const searchQuestionForm = await QuestionForm.findOne({
       _id: req.fields.formulaireId,
     });

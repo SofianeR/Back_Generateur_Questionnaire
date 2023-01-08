@@ -34,7 +34,6 @@ router.get("/questionForm/all", async (req, res) => {
 router.post("/questionForm/create", async (req, res) => {
   try {
     const { title, slug, theme, questions, picture } = req.fields;
-    console.log(req.fields);
 
     const checkForm = await QuestionForm.findOne({ title });
 
@@ -55,7 +54,6 @@ router.post("/questionForm/create", async (req, res) => {
       res.json(newForm);
     }
   } catch (error) {
-    console.log(error.message);
     res.status(400).json({ message: error.message });
   }
 });
@@ -70,11 +68,11 @@ router.post("/questionForm/update", async (req, res) => {
         formToUpdate.slug = formToUpdate.slug;
         formToUpdate.questions = req.fields.questions;
         formToUpdate.theme = req.fields.theme;
-        formToUpdate.picture = req.fields.picture;
+        if (req.fields.picture) {
+          formToUpdate.picture = req.fields.picture;
+        }
 
         await formToUpdate.save();
-
-        console.log("apres save");
 
         res.json(formToUpdate);
       } else {
