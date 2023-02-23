@@ -70,6 +70,8 @@ router.post("/questionForm/update", async (req, res) => {
         formToUpdate.theme = req.fields.theme;
         if (req.fields.picture) {
           formToUpdate.picture = req.fields.picture;
+        } else {
+          formToUpdate.picture = "";
         }
 
         await formToUpdate.save();
